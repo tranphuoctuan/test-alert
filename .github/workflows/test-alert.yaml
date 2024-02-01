@@ -13,8 +13,8 @@ jobs:
           with:
             payload: |
               {
-                  "text": "hello world."
+                "text": "hello"
               }       
           env:
-            SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+            SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
             SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
