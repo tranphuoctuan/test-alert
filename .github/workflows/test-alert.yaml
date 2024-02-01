@@ -16,5 +16,5 @@ jobs:
                 "text": "hello 123 "
               }       
           env:
-            SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
             SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
