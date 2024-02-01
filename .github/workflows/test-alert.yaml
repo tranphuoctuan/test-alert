@@ -1,0 +1,20 @@
+on: 
+    push:
+      branches:
+         '*'
+  
+jobs:
+    new_push_job:
+      runs-on: ubuntu-latest
+      name: New push to repo
+      steps:
+        - name: Send GitHub trigger payload to Slack Workflow Builder
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            payload: |
+              {
+                  "text": "hello world."
+              }       
+          env:
+            SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+            SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
