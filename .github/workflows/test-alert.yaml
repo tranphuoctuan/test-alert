@@ -3,29 +3,19 @@ on:
       branches:
          '*'
   
-# jobs:
-#     new_push_job:
-#       runs-on: ubuntu-latest
-#       name: New push to repo
-#       steps:
-#         - name: Send GitHub trigger payload to Slack Workflow Builder
-#           uses: slackapi/slack-github-action@v1.25.0
-#           with:
-#             payload: |
-#               {
-#                 "text": "hello 123 "
-#               }       
-#           env:
-#             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#             SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 jobs:
-    slackNotification:
-      name: Slack Notification
+    new_push_job:
       runs-on: ubuntu-latest
+      name: New push to repo
       steps:
-      - uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        - name: Send GitHub trigger payload to Slack Workflow Builder
+          uses: slackapi/slack-github-action@v1.25.0
+          with:
+            payload: |
+              {
+                "text": "hello 123 "
+              }       
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
