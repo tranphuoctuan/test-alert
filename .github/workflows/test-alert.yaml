@@ -47,11 +47,11 @@ jobs:
                 fields: repo,message,job,took
           env:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    matrix-notification:
-          strategy:
-            matrix:
-              os: [ubuntu-20.04, ubuntu-22.04]
-          runs-on: ${{ matrix.os }}
+    # matrix-notification:
+    #       strategy:
+    #         matrix:
+    #           os: [ubuntu-20.04, ubuntu-22.04]
+    #       runs-on: ${{ matrix.os }}
           # steps:
           #   - uses: 8398a7/action-slack@v3
           #     with:
