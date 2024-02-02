@@ -34,13 +34,14 @@ jobs:
         #   env:
         #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       
-        - name: Fields Check
+        - name: pushalert to slack channel
           uses: 8398a7/action-slack@v3
           with:
                 status: ${{ job.status }}
                 fields: repo,message,commit,author,job,eventName,ref,workflow,took
           env:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          if: always()
         # - uses: 8398a7/action-slack@v3
         #   with:
         #         status: ${{ job.status }}
@@ -60,4 +61,4 @@ jobs:
           #     env:
           #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
           #       MATRIX_CONTEXT: ${{ toJson(matrix) }}
-          #     if: always()
+              # if: always()
