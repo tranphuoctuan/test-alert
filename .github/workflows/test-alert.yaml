@@ -15,4 +15,29 @@ jobs:
            status: success
           env:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        
+        - name: Failed Check
+          uses: 8398a7/action-slack@v3
+          with:
+           status: failure
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        - name: Cancelled Check
+          uses: 8398a7/action-slack@v3
+          with:
+            status: cancelled
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        - name: Check
+          uses: 8398a7/action-slack@v3
+          with:
+              status: ${{ job.status }}
+            env:
+              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        - name: Legacy Check
+          uses: 8398a7/action-slack@v3
+          with:
+              status: ${{ job.status }}
+              username: legacy user
+              icon_emoji: ":octocat:"
+            env:
+              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
