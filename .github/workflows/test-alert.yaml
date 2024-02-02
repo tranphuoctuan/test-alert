@@ -19,12 +19,12 @@ jobs:
         #     status: cancelled
         #   env:
         #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        - name: Check
-          uses: 8398a7/action-slack@v3
-          with:
-              status: ${{ job.status }}
-          env:
-              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        # - name: Check
+        #   uses: 8398a7/action-slack@v3
+        #   with:
+        #       status: ${{ job.status }}
+        #   env:
+        #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         # - name: Legacy Check
         #   uses: 8398a7/action-slack@v3
         #   with:
@@ -52,12 +52,12 @@ jobs:
             matrix:
               os: [ubuntu-20.04, ubuntu-22.04]
           runs-on: ${{ matrix.os }}
-          steps:
-            - uses: 8398a7/action-slack@v3
-              with:
-                status: ${{ job.status }}
-                fields: job,took
-              env:
-                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
-                MATRIX_CONTEXT: ${{ toJson(matrix) }}
-              if: always()
+          # steps:
+          #   - uses: 8398a7/action-slack@v3
+          #     with:
+          #       status: ${{ job.status }}
+          #       fields: job,took
+          #     env:
+          #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
+          #       MATRIX_CONTEXT: ${{ toJson(matrix) }}
+          #     if: always()
