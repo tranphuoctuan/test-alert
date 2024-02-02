@@ -7,6 +7,8 @@ jobs:
       runs-on: ubuntu-latest
       name: New push to repo
       steps:
+          - run:
+              exit 1
         # - name: Failed Check
         #   uses: 8398a7/action-slack@v3
         #   with:
@@ -40,7 +42,7 @@ jobs:
                 status: ${{ job.status }}
                 fields: repo,message,commit,author,job,eventName,ref,workflow,took
           env:
-                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL };
+                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }
           if: always()
         # - uses: 8398a7/action-slack@v3
         #   with:
