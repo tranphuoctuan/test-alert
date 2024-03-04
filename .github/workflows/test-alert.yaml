@@ -24,7 +24,6 @@ jobs:
           with:
             parameterPairs: 
              "SLACK_WEBHOOK_URL = SLACK_WEBHOOK_URL"
-
         - name: pushalert to slack channel
           uses: 8398a7/action-slack@v3
           with:
