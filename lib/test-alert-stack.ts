@@ -12,21 +12,11 @@ export class TestAlertStack extends Stack {
       clientIds: ["sts.amazonaws.com"],
     });
 
-    const s3host = new s3.Bucket(this, 'bucket', {
-    })
-
     /// create iam user
     const user = new iam.User(this, 'my_user', {
       userName: 'UserForPreSignUrl'
     })
-
-    // policy for user
-    const policy = new iam.Policy(this, 'Policy', {
-      policyName: "User for "
-    })
-
-
-
+    
     const role = new iam.Role(this, "DeployRole", {
       roleName: "DeployRole",
       maxSessionDuration: Duration.hours(2),
