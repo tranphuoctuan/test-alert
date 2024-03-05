@@ -29,7 +29,8 @@ jobs:
           with:
                 status: ${{ job.status }}
                 fields: repo
-                text: "<!channel> Star from ${{ github.event.sender.login }}, Total: ${{ github.event.repository.stargazers_count }}"                # custom_payload: |
+                text: "<!channel> Star from ${{ github.event.sender.login }}"      
+                # custom_payload: |`
                 #     {
                 #       {
                 #         attachments: [{
