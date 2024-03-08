@@ -4,7 +4,8 @@ import * as iam from "aws-cdk-lib/aws-iam";
 import cdk = require('@aws-cdk/core');
 import * as ssm from "aws-cdk-lib/aws-ssm";
 import * as s3 from "aws-cdk-lib/aws-s3";
-
+import * as ecs from "aws-cdk-lib/aws-ecs";
+import * as ecr from "aws-cdk-lib/aws-ecr";
 
 export class TestAlertStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -23,7 +24,7 @@ export class TestAlertStack extends Stack {
       policyName: "AmazonS3FullAccess",
       statements: [
         new iam.PolicyStatement({
-          actions: ['s3:*'],
+          actions: ["s3:GetObject","s3:PutObject"],
           resources: [s3bucket.bucketArn]
         })
       ]
@@ -37,9 +38,9 @@ export class TestAlertStack extends Stack {
       userName: user.userName,
     })
     policy.attachToUser(user);
+``
 
-  
-
+   
     // create ssm parameter for AccessKey
     new ssm.StringParameter(this, 'AccessKeyForUser', {
       description: "This param is the AccessKey for User Send messages",
