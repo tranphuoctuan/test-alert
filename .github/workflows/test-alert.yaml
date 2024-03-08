@@ -28,7 +28,7 @@ jobs:
           uses: 8398a7/action-slack@v3
           with:
             status: ${{ job.status }}
-            fields: repo,message,commit,author,action,workflow,job,pullRequest
+            fields: repo,message,commit,author,action,workflow,pullRequest
             custom_payload: |
               {
                 attachments: [{
