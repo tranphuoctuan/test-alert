@@ -28,6 +28,7 @@ jobs:
         - run: exit 1
         - name: pushalert to slack channel
           uses: 8398a7/action-slack@v3
+          if: ${{ success() || failure() }}
           with:
             status: ${{ job.status }}
             fields: pullRequest,author,workflow
