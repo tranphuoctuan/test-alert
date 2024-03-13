@@ -27,6 +27,7 @@ jobs:
         - name: pushalert to slack channel
           uses: 8398a7/action-slack@v3
           with:
+            icon_emoji: ':octocat:'
             status: ${{ job.status }}
             fields: repo,message,commit,author,workflow,pullRequest
             custom_payload: |
