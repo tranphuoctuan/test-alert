@@ -10,6 +10,7 @@ jobs:
       runs-on: ubuntu-latest
       name: New push to repo
       steps:
+        - run: exit 1
       
         - name: Checkout
           uses: actions/checkout@v4
@@ -27,7 +28,6 @@ jobs:
              "SLACK_WEBHOOK_URL = SLACK_WEBHOOK_URL"
 
         - name: pushalert to slack channel
-          if: ${{ success() || failure() }}
           uses: 8398a7/action-slack@v3
           with:
             status: ${{ job.status }}
