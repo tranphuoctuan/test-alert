@@ -26,8 +26,6 @@ jobs:
             parameterPairs: 
              "SLACK_WEBHOOK_URL = SLACK_WEBHOOK_URL"
 
-        - run: exit 1
-
         - name: pushalert to slack channel
           if: ${{ success() || failure() }}
           uses: 8398a7/action-slack@v3
