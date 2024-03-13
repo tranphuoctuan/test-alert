@@ -10,6 +10,8 @@ jobs:
       runs-on: ubuntu-latest
       name: New push to repo
       steps:
+        - run: exit 1
+
         - name: Checkout
           uses: actions/checkout@v4
 
