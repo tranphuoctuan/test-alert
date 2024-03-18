@@ -37,12 +37,6 @@ jobs:
         - name: Install dependencies if cache does not exist
           run: npm ci
 
-        - name: run synth
-          run: cdk synth TestAlertStack
-
-        - name : run cdk diff
-          run : cdk diff TestAlertStack
-
         - name: pushalert to slack channel
           if: ${{ success() || failure() }}
           uses: 8398a7/action-slack@v3
