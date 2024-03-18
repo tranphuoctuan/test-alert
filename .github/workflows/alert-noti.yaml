@@ -9,6 +9,24 @@ permissions:
   contents: read
 
 jobs:
+  run-aws:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Setup Node
+          uses: actions/setup-node@v4
+          with:
+              node-version-file: "package.json"
+              cache: npm
+        - name: Install dependencies if cache does not exist
+          run: npm ci
+        - name: run synth
+          run: cdk synth TestAlertStack
+        - name : run cdk diff
+          run : cdk diff TestAlertStack
+
   alert_to_slack:
     permissions: write-all
     runs-on: ubuntu-latest
