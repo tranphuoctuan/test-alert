@@ -6,8 +6,8 @@ import { BudgetsAlertStack } from '../lib/sns-stack';
 import { config } from '../config.dev';
 
 const app = new cdk.App();
-// new TestAlertStack(app, 'TestAlertStack', {
-// });
+new TestAlertStack(app, 'TestAlertStack', {
+});
 
 new BudgetsAlertStack(app, "BudgetsAlertStack", {
     env: { region: "ap-southeast-1" },

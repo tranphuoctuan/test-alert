@@ -21,19 +21,6 @@ import { Lambda } from "aws-cdk-lib/aws-ses-actions";
       super(scope, id, props);
       const { slackWorkspaceId, budgetsAlertSlackChannelId } = props;
   
-const auroraEngineVersion = rds.DatabaseClusterEngine.auroraPostgres({
-    version: rds.AuroraPostgresEngineVersion.VER_15_3,
-  });
-
-  const cluster = new rds.DatabaseCluster(this, `${id}-Aurora`, {
-    // credentials: rds.Credentials.fromSecret(dbRootSecret),
-    engine: auroraEngineVersion,
-    writer: rds.ClusterInstance.serverlessV2(`${id}-AuroraWriter`, {
-      publiclyAccessible: false,
-      caCertificate: rds.CaCertificate.RDS_CA_RDS2048_G1,
-    }),
-});
-
 
 
 const topic = new aws_sns.Topic(this, "BudgetsAlertTopic");
