@@ -35,8 +35,9 @@ export class TestAlertStack extends Stack {
       userName: user.userName,
     })
     policy.attachToUser(user);
-
-    qweqweqw
+ 
+    
+    // qweqweqw
   //  qweqwe 
     // create ssm parameter for AccessKey
     new ssm.StringParameter(this, 'AccessKeyForUser', {
