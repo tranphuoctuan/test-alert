@@ -16,19 +16,7 @@ export class TestAlertStack extends Stack {
       clientIds: ["sts.amazonaws.com"],
     });
 
-    const s3bucket = new s3.Bucket(this, "S3bucket", {
-    })
-    
-    const policy = new iam.Policy(this, "policy", {
-
-      policyName: "AmazonS3FullAccess",
-      statements: [
-        new iam.PolicyStatement({
-          actions: ["s3:GetObject","s3:PutObject"],
-          resources: [s3bucket.bucketArn]
-        })
-      ]
-    })
+  
 
     /// create iam user
     const user = new iam.User(this, 'iam_user', {
@@ -37,8 +25,7 @@ export class TestAlertStack extends Stack {
     const accessKey = new iam.CfnAccessKey(this, 'CfnAccessKey',{
       userName: user.userName,
     })
-    policy.attachToUser(user);
-``
+    
 
    
     // create ssm parameter for AccessKey
