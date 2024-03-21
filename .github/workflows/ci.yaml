@@ -1,0 +1,23 @@
+name: ci-web
+
+on:
+  pull_request:
+    paths:
+      - "web/**"
+      - "package.json"
+      - "web/package.json"
+
+
+jobs:
+  ci-web:
+    runs-on: ubuntu-latest
+    outputs:
+      stageName: ${{ needs.set-env.outputs.stageName}}
+      awsRoleArn: ${{ needs.set-env.outputs.awsRoleArn}}
+      job-status: ${{ job.status}}
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+     
