@@ -1,14 +1,32 @@
 name: push-alert-to-slack-channel
 
 on: 
-    push:
-      branches:
-         'main'
+    pull_request:
+      paths:
+        - ./lib
+        - ./bin
+        - ./github/workflows
 permissions:
   id-token: write
   contents: read
 
 jobs:
+  set-env:
+    runs-on: ubuntu-latest
+    outputs:
+      stageName: ${{ steps.env-setting.outputs.stageName }}
+      awsRoleArn: ${{ steps.env-setting.outputs.awsRoleArn }}
+    steps:
+      - id: env-setting
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          TARGET_TAG="${{ github.ref_name }}"
+          if [[ $TARGET_TAG == "v0.*" ]]; then
+            echo "Setting environment to dev"
+            echo "stageName=dev" >> $GITHUB_OUTPUT
+            echo "awsRoleArn=arn:aws:iam::649952785555:role/DeployRole" >> $GITHUB_OUTPUT   
+        run: echo STAGE_NAME: ${{ set-env.outputs.stageName }}
+          
   run-aws:
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +54,9 @@ jobs:
     
         - name: Install dependencies if cache does not exist
           run: npm ci
+
+        - name: coppy config follows by stage_name
+          run: npm run config:${stageName}
 
         - name: pushalert to slack channel
           if: ${{ success() || failure() }}
