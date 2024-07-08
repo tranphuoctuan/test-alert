@@ -25,7 +25,7 @@ jobs:
             echo "Setting environment to dev"
             echo "stageName=dev" >> $GITHUB_OUTPUT
             echo "awsRoleArn=arn:aws:iam::649952785555:role/DeployRole" >> $GITHUB_OUTPUT   
-        run: echo STAGE_NAME: ${{ set-env.outputs.stageName }}
+        run: echo ${{ set-env.outputs.stageName }}
           
   run-aws:
     runs-on: ubuntu-latest
