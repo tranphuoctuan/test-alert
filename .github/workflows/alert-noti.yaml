@@ -1,9 +1,13 @@
 name: push-alert-to-slack-channel
 
-on: 
-    push:
-      tags:
-        - 'v0/*'
+on:
+  pull_request:
+    paths:
+      - .github/workflows/alert-noti.yaml
+      - infra/**
+      - package.json
+      - lib/**
+
 permissions:
   id-token: write
   contents: read
@@ -36,6 +40,9 @@ jobs:
     
         - name: Install dependencies if cache does not exist
           run: npm ci
+
+        - name: Cdk diff resource
+          run: cdk diff infraStack
 
         - name: pushalert to slack channel
           if: ${{ success() || failure() }}
