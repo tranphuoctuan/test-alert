@@ -42,7 +42,7 @@ jobs:
           run: npm ci
 
         - name: Cdk diff resource
-          run: cdk diff infraStack
+          run: npm run cdk diff infraStack
 
         - name: pushalert to slack channel
           if: ${{ success() || failure() }}
