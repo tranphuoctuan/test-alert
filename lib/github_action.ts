@@ -21,7 +21,7 @@ export class GithubActionsOidcStack extends Stack {
             "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
           },
           StringLike: {
-            "token.actions.githubusercontent.com:sub": "repo:NewEraJapanDigital/jna-backend*",
+            "token.actions.githubusercontent.com:sub": "repo:tranphuoctuan/test-alert*",
           },
         }
       ),
