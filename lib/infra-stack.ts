@@ -7,7 +7,7 @@ export class infraStack extends Stack {
     super(scope, id);
 
     const s3Bucket = new s3.Bucket(this, "S3Bucket", {
-      bucketName: `lab-cicd-st-bucket-test`,
+      bucketName: `lab-cicd-st-bucket-test-abc`,
     });
   }
 }
