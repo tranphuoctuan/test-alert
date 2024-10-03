@@ -40,7 +40,7 @@ jobs:
         run: ls -la
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm ci
 
       - name: Verify AWS credentials
         run: aws sts get-caller-identity
