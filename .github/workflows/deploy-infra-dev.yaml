@@ -3,7 +3,7 @@ name: deploy infra Stack
 on:
   push:
     branches:
-      - main
+      - develop
     paths:
       - "bin/**"
       - "lib/**"
