@@ -77,7 +77,7 @@ jobs:
           run: aws sts get-caller-identity
     
         - name: Install dependencies if cache does not exist
-          run: npm install
+          run: npm ci
 
         - name: Diff infraStack
           run: npm run cdk diff infraStack
