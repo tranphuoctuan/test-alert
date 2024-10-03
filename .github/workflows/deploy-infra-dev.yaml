@@ -14,12 +14,6 @@ permissions:
   contents: read
   actions: read
 
-env:
-  SERVICE: lab
-  ENV: dev
-  REGION: ap-southeast-1
-  ACCOUNTID: 967779793699
-
 jobs:
   infra-deploy:
     environment: dev
@@ -38,9 +32,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY}}
-          aws-region: ${{env.REGION}}
-          mask-aws-account-id:  ${{env.ACCOUNTID}}
+          role-to-assume: ${{ env.DEV_IAM_ROLE_DEPLOY}}
+          aws-region: ap-southeast
 
       - name: Verify AWS credentials
         run: aws sts get-caller-identity

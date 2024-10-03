@@ -2,12 +2,12 @@ name: deploy infra Stack
 
 on:
   push:
-    tags:
-      - 'stg-v[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - main
     paths:
       - "bin/**"
       - "lib/**"
-      - ".github/workflows/deploy-infra-stg.yaml"
+      - ".github/workflows/deploy-infra-dev.yaml"
 
 permissions:
   id-token: write
@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   infra-deploy:
+    environment: stg
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -23,29 +24,26 @@ jobs:
       - name: Checkout
         uses: actions/setup-node@v4
 
-      - name: Setting up Node 16
+      - name: Setting up Node 20
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
-      - name: Installing Node dependencies
-        run: npm i
+          node-version: '20'
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY }}
-          aws-region: ap-southeast-1
+          role-to-assume: ${{ env.DEV_IAM_ROLE_DEPLOY}}
+          aws-region: ap-southeast
+          mask-aws-account-id:  ${{env.DEV_ACCOUNT_ID}}
 
       - name: Verify AWS credentials
         run: aws sts get-caller-identity
-      
-      - name: CDK Deploy
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy GithubActionsOidcStack
         run: npm run cdk deploy GithubActionsOidcStack
 
-
-
-
-        
-
-
+      - name: Deploy infraStack
+        run: npm run cdk deploy GithubActionsOidcStack
