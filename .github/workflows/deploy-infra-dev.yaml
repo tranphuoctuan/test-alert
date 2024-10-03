@@ -21,6 +21,7 @@ env:
 
 jobs:
   infra-deploy:
+    environment: dev
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -37,9 +38,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY}}
-          aws-region: ap-southeast-1
-        env:
-          ENVIRONMENT: ${{env.ENV}}
+          aws-region: ${{env.REGION}}
 
       - name: Verify AWS credentials
         run: aws sts get-caller-identity
