@@ -3,7 +3,7 @@ name: deploy infra Stack
 on:
   push:
     branches:
-      - main
+      - release
     paths:
       - "bin/**"
       - "lib/**"
@@ -32,9 +32,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.DEV_IAM_ROLE_DEPLOY}}
+          role-to-assume: ${{ vars.DEV_IAM_ROLE_DEPLOY}}
           aws-region: ap-southeast
-          mask-aws-account-id:  ${{env.DEV_ACCOUNT_ID}}
+          mask-aws-account-id:  ${{vars.DEV_ACCOUNT_ID}}
 
       - name: Verify AWS credentials
         run: aws sts get-caller-identity
