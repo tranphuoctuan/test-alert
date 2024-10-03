@@ -6,6 +6,7 @@ on:
       - bin/**
       - lib/**
       - package.json
+      - .github/workflows/ci-infra.yaml
 
   workflow_call:
     inputs:
@@ -80,6 +81,3 @@ jobs:
 
         - name: Diff infraStack
           run: npm run cdk diff infraStack
-        
-        - name: Diff GithubActionsOidcStack
-          run: npm run cdk diff GithubActionsOidcStack
