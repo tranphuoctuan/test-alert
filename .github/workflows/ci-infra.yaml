@@ -6,7 +6,7 @@ on:
       - bin/**
       - lib/**
       - package.json
-      - .github/workflows/ci-infra.yaml
+      - .github/workflows/*
 
   workflow_call:
     inputs:
