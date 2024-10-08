@@ -53,5 +53,8 @@ jobs:
         - name: Install dependencies if cache does not exist
           run: npm ci
 
+        - name: run check assume role
+          run: hello
+
         - name: Diff infraStack
           run: npm run cdk diff infraStack
