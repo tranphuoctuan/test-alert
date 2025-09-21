@@ -13,44 +13,37 @@ env:
   REGION: ap-southeast-1
   ENVIRONMENT: dev
 
-
 jobs:
   ci-infra:
     runs-on: ubuntu-latest
     environment: dev
 
     steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        - name: Setting up Node 20
-          uses: actions/setup-node@v4
-          with:
-            node-version: '20'
-            cache: 'npm'
+      - name: Setting up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
-        - name: Configure AWS credentials
-          uses: aws-actions/configure-aws-credentials@v4
-          with:
-              role-to-assume: ${{ secrets.DEV_IAM_ROLE_DEPLOY }}
-              aws-region: ap-southeast-1
+      - name: check assume role
+        run: aws sts get-caller-identity
 
-        - name: check assume role
-          run: aws sts get-caller-identity
-    
-        - name: Notify Slack
-          if: always()
-          uses: 8398a7/action-slack@v3
-          with:
-            status: ${{ job.status }}
-            fields: author,workflow
-            custom_payload: |
-              {
-                username: "${{ github.event.repository.name }}"
-                attachments: [{
-                  color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                  text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ github.actor }} ${{ job.status }} in ${process.env.AS_TOOK}`,
-                }]
-              }
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Notify Slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: author,workflow
+          custom_payload: |
+            ({
+              username: "${{ github.event.repository.name }}",  // ✅ bắt buộc trong JSON root
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ github.actor }} ${{ job.status }} in ${process.env.AS_TOOK}`
+              }]
+            })
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
