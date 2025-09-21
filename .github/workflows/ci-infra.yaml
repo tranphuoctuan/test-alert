@@ -1,7 +1,7 @@
 name: ci-infra-check
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -33,21 +33,12 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: none
           custom_payload: |
             ({
               username: "${{ github.event.repository.name }}",
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                fields: [{
-                  title: "Workflow",
-                  value: "${{ github.workflow }}",
-                  short: true
-                }, {
-                  title: "Repository", 
-                  value: "${{ github.event.repository.name }}",
-                  short: true
-                }]
+                text: `Workflow: ${{ github.workflow }}\nRepo: ${{ github.event.repository.name }}`
               }]
             })
         env:
