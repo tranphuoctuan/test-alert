@@ -28,15 +28,18 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: check assume role
-        run: aws sts get-caller-identity
-
       - name: Notify Slack
         if: always()
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: repo_short,workflow   # ✅ thay commit bằng workflow
+          custom_payload: |
+            ({
+              username: "${{ github.event.repository.name }}",
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
+                text: `Workflow: ${{ github.workflow }}\nRepo: ${{ github.event.repository.name }}`
+              }]
+            })
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          AS_REPO_SHORT: ${{ github.event.repository.name }}   # ✅ chỉ lấy repo name (test-alert)
