@@ -36,14 +36,13 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          fields: workflow,repo_name   # ✅ chỉ giữ workflow + repo_name
           custom_payload: |
             ({
+              username: "${{ github.event.repository.name }}",
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} ${{ job.status }} in ${process.env.AS_TOOK}`
+                text: `Workflow: ${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} of ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ github.actor }} ${{ job.status }} in ${process.env.AS_TOOK}`
               }]
             })
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          AS_REPO_NAME: ${{ github.event.repository.name }}   # ✅ chỉ tên repo (vd: test-alert)
