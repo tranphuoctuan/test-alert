@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+
 permissions:
   id-token: write
   contents: read
@@ -43,4 +44,4 @@ jobs:
               }]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_LEGACY_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
