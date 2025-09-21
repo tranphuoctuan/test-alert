@@ -2,20 +2,8 @@ name: ci-infra-check
 
 on:
   pull_request:
-    paths:
-      - bin/**
-      - lib/**
-      - package.json
-      - .github/workflows/*
-
-  workflow_call:
-    inputs:
-      stageName:
-        type: string
-        required: true
-      awsRoleArn:
-        type: string
-        required: true
+    branches:
+      - main
 
 permissions:
   id-token: write
@@ -50,11 +38,19 @@ jobs:
         - name: check assume role
           run: aws sts get-caller-identity
     
-        - name: Install dependencies if cache does not exist
-          run: npm ci
-
-        - name: run check assume role
-          run: hello
-
-        - name: Diff infraStack
-          run: npm run cdk diff infraStack
+        - name: Notify Slack
+          if: always()
+          uses: 8398a7/action-slack@v3
+          with:
+            status: ${{ job.status }}
+            fields: author,workflow
+            username: "${{ github.event.repository.name }}"
+            custom_payload: |
+              {
+                attachments: [{
+                  color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
+                  text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ github.actor }} ${{ job.status }} in ${process.env.AS_TOOK}`,
+                }]
+              }
+          env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
