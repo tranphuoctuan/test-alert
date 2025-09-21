@@ -1,7 +1,7 @@
 name: ci-infra-check
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -28,18 +28,19 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Notify Slack
-        if: always()
+      - name: Custom Field2
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
           custom_payload: |
-            ({
-              username: "${{ github.event.repository.name }}",
+            {
+              username: 'action-slack',
+              icon_emoji: ':octocat:',
               attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
-                text: `Workflow: ${{ github.workflow }}\nRepo: ${{ github.event.repository.name }}`
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
               }]
-            })
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
